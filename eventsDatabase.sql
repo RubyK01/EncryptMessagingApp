@@ -1,9 +1,5 @@
 DROP DATABASE IF EXISTS `events`;
+CREATE DATABASE events;
+CREATE TABLE events_table(Event_Date varchar (255), Event_Details varchar (255));
 
-create database if not exists`events` default character set utf8 collate utf8_general_ci;
-
-use events;
-
-create table eventDetail(
-eventss varchar(255) not null
-);
+SELECT * FROM events_table;
