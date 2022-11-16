@@ -102,7 +102,7 @@ public class TCPClientConnectionRun implements Runnable {
                                     e.printStackTrace();
                                 }*/
                                 try{
-                                    myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/events","root","ryte11/seRt62");
+                                    myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/events","root","[your MySQL root password]");
                                     Statement  myStatement = myConn.createStatement();
                                     myStatement.executeUpdate("INSERT INTO events_table (Event_Date,Event_Details)" + "VALUES('" + theDate + "','" + theEvent + "')");
                                 }
