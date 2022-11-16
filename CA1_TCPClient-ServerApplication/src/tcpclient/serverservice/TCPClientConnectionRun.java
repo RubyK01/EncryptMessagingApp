@@ -27,6 +27,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.*;
 import java.util.regex.Matcher; 
 import java.util.regex.Pattern;
@@ -41,13 +45,29 @@ import java.util.regex.Pattern;
 public class TCPClientConnectionRun implements Runnable {
     Socket client_link = null;  
     String clientID;
+    Connection myConn;
     
     static Map<String, String> hm1 = new HashMap<>();
     
     public TCPClientConnectionRun(Socket connection, String cID) {
         this.client_link = connection;
         clientID = cID;     
-  }
+    }
+    
+    
+    //public void getConnection(){      //not working
+    /*private void getConnection(){
+        try{
+            myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/securityca_events","root","ryte11/seRt62");
+        }
+        catch(SQLException ex){
+            System.out.println("Error Connecting: "+ex.getMessage());
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+        }
+    }*/
+    
     
     public void run() {
         try{
@@ -74,6 +94,24 @@ public class TCPClientConnectionRun implements Runnable {
                         synchronized (this){
                             if(splitMsg[0].contains("add")) {
                                 hm1.put(theEvent, theDate);
+                                /*try{
+                                    Statement  myStatement = myConn.createStatement();
+                                    myStatement.executeUpdate("INSERT INTO events_table (Event_Date,Event_Details)" + "VALUES('" + theDate + "','" + theEvent + "')");
+                                }
+                                catch(Exception e){
+                                    e.printStackTrace();
+                                }*/
+                                try{
+                                    myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/securityca_events","root","ryte11/seRt62");
+                                    Statement  myStatement = myConn.createStatement();
+                                    myStatement.executeUpdate("INSERT INTO events_table (Event_Date,Event_Details)" + "VALUES('" + theDate + "','" + theEvent + "')");
+                                }
+                                catch (SQLException ex) { 
+                                    System.out.println("An error occurred while connecting MySQL databse"); 
+                                    ex.printStackTrace(); 
+                                }
+
+
                                 System.out.println("The HashMap: " + hm1);
                                 Map<String, String> hm2 = new HashMap<>();                        
                                 for (Map.Entry<String, String> entry : hm1.entrySet()) {
