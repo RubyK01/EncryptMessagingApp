@@ -58,7 +58,7 @@ public class TCPClientConnectionRun implements Runnable {
     //public void getConnection(){      //not working
     /*private void getConnection(){
         try{
-            myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/securityca_events","root","ryte11/seRt62");
+            myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/events","root","[your MySQL root password]");
         }
         catch(SQLException ex){
             System.out.println("Error Connecting: "+ex.getMessage());
