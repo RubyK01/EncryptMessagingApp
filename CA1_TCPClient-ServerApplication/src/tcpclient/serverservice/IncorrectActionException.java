@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package tcpclient.serverservice;
+package securetcpclientserver;
 
 /**
  * IncorrectActionException.java
@@ -15,4 +15,4 @@ public class IncorrectActionException extends Exception {
     public String getMsg() {
         return ("Invalid action");
     }   
-}
+
