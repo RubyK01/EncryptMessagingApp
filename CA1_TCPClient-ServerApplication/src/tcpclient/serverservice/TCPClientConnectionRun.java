@@ -52,7 +52,7 @@ public class TCPClientConnectionRun implements Runnable {
     Socket client_link = null;  
     String clientID;
     public static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";  
-    public static final String specialChars = "/*!@#$%^&*()\"{}_[]|\\?/<>,.;:";
+    public static final String specialChars = "/*!@#$%^&*()\"{}_[]|\\?/<>,.;:+-=";
     
     static Map<String, String> hm1 = new HashMap<>();
     
@@ -63,9 +63,11 @@ public class TCPClientConnectionRun implements Runnable {
         clientID = cID;     
     }
     
+    //https://www.javatpoint.com/caesar-cipher-program-in-java
+    //Ceaser Cipher by Ruby
     public static String encryptData(String message, int shiftKey)   
-   {   
-        // convert inputStr into lower case   
+    {   
+        // convert message into lower case   
         message = message.toLowerCase();   
 
         // encryptStr to store encrypted data   
@@ -76,13 +78,16 @@ public class TCPClientConnectionRun implements Runnable {
         {   
             // get position of each character of inputStr in ALPHABET   
             int pos = ALPHABET.indexOf(message.charAt(i));   
-            
-            // get encrypted char for each char of inputStr   
+
+            // get encrypted char for each char of message
+            //Checking if a character is a space, number or a special character
             if(message.charAt(i) == ' ' || Character.isDigit(message.charAt(i)) || specialChars.contains(Character.toString(message.charAt(i)))){
+                //keeping the value of the space, number or special character the same and adding to the encryptStr variable
                 char encryptChar = message.charAt(i);
                 encryptStr += encryptChar;
             }
             else{
+                //if the character is a letter the letter is shifted 5 times and added to encryptStr variable
                 int encryptPos = (shiftKey + pos) % 26;   
                 char encryptChar = ALPHABET.charAt(encryptPos);
                 // add encrypted char to encrypted string   
@@ -92,31 +97,33 @@ public class TCPClientConnectionRun implements Runnable {
 
         // return encrypted string   
         return encryptStr;   
-   }   
+   }  
+    //https://www.javatpoint.com/caesar-cipher-program-in-java
+    //Ceaser Cipher by Ruby
    public static String decryptData(String message, int shiftKey)   
     {   
         // convert inputStr into lower case   
         message = message.toLowerCase();   
-          
+
         // decryptStr to store decrypted data   
         String decryptStr = "";   
-          
+
         // use for loop for traversing each character of the input string   
         for (int i = 0; i < message.length(); i++)   
         {   
-              
+
             // get position of each character of inputStr in ALPHABET   
             int pos = ALPHABET.indexOf(message.charAt(i));   
-              
+
             // get decrypted char for each char of inputStr  
-            // get encrypted char for each char of inputStr   
+            //Checking if a character is a space, number or a special character
             if(message.charAt(i) == ' ' || Character.isDigit(message.charAt(i)) || specialChars.contains(Character.toString(message.charAt(i)))){
                 char decryptChar = message.charAt(i);
                 decryptStr += decryptChar;
             }
-            else{
+            else{//If the character is not a number shift back 5 
                 int decryptPos = (pos - shiftKey) % 26;   
-              
+
                 // if decryptPos is negative   
                 if (decryptPos < 0){   
                     decryptPos = ALPHABET.length() + decryptPos;   
@@ -126,16 +133,6 @@ public class TCPClientConnectionRun implements Runnable {
                 // add decrypted char to decrypted string   
                 decryptStr += decryptChar; 
             }
-//            int decryptPos = (pos - shiftKey) % 26;   
-//              
-//            // if decryptPos is negative   
-//            if (decryptPos < 0){   
-//                decryptPos = ALPHABET.length() + decryptPos;   
-//            }   
-//            char decryptChar = ALPHABET.charAt(decryptPos);   
-//            
-//            // add decrypted char to decrypted string   
-//            decryptStr += decryptChar;   
         }   
         // return decrypted string   
         return decryptStr;   
